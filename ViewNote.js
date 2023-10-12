@@ -1,0 +1,161 @@
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, View, Text, Image, TouchableOpacity } from 'react-native';
+import { TextInput, Button, RadioButton } from 'react-native-paper';
+
+export function ViewNoteUi({ navigation, route }) {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [category, setCategory] = useState('study');
+  const [noteDate, setNoteDate] = useState('');
+
+  useEffect(() => {
+    if (route.params) {
+      const {
+        title: noteTitle,
+        noteDescription,
+        noteCategory,
+        noteDate: noteDateParam,
+      } = route.params;
+      setTitle(noteTitle);
+      setDescription(noteDescription);
+      setCategory(noteCategory);
+      setNoteDate(noteDateParam);
+    }
+  }, [route.params]);
+
+  const ui = (
+    <View style={styles.container}>
+      <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
+        <Image source={require('./images/back.png')} style={styles.backIcon} />
+      </TouchableOpacity>
+      <View style={styles.headerContainer1}>
+        <Image source={require('./images/1.png')} style={styles.logo} />
+        <Text style={styles.header1}>Your Notes</Text>
+      </View>
+      <TextInput
+        label="Title"
+        value={title}
+        onChangeText={(text) => setTitle(text)}
+        style={styles.input}
+        editable={false}
+      />
+      <TextInput
+        label="Description"
+        value={description}
+        onChangeText={(text) => setDescription(text)}
+        multiline
+        style={[styles.input, styles.descriptionInput]}
+        editable={false}
+        labelStyle={styles.label}
+      />
+    </View>
+  );
+  return ui;
+}
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+    backgroundColor: 'black',
+    justifyContent: 'center',
+  },
+  headerContainer: {
+    borderWidth: 2,
+    borderColor: '#fff',
+    borderRadius: 20,
+    marginBottom: 16,
+    padding: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 75,
+    height: 60,
+    marginEnd: 5,
+  },
+  header: {
+    fontSize: 38,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
+    marginEnd: 10,
+  },
+  input: {
+    marginBottom: 16,
+    fontSize: 18,
+  },
+  descriptionInput: {
+    height: 320,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginLeft: 10,
+    marginBottom: 4,
+    color: 'white',
+  },
+  userTypeLabel: {
+    color: 'white',
+  },
+  radioContainer: {
+    flexDirection: 'row',
+  },
+  radioItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    width: 10,
+    height: 15,
+  },
+  button: {
+    backgroundColor: '#fff',
+    marginTop: 16,
+  },
+  buttonText: {
+    color: 'black',
+    fontSize: 18,
+  },
+  registerContainer: {
+    alignItems: 'center',
+    margin: 10,
+  },
+  registerText: {
+    color: '#fff',
+    fontSize: 14,
+    textDecorationLine: 'underline',
+  },
+  backButton: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+  },
+  backIcon: {
+    width: 30,
+    height: 30,
+    marginTop:20,
+  },
+  headerContainer1: {
+    borderWidth: 2,
+    borderColor: '#fff',
+    borderRadius: 20,
+    marginBottom: 16,
+    padding: 10,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  logo: {
+    width: 75,
+    height: 60,
+    marginEnd: 5,
+  },
+  header1: {
+    fontSize: 38,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign: 'center',
+    marginEnd: 10,
+  },
+});
